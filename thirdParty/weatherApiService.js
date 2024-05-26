@@ -51,7 +51,8 @@ exports.getHistoricalWeatherData = async (latitude, longitude, days) => {
 
     if (response.status === 200) {
       const data = response.data;
-      return data;
+      const summaryData = makeHistoricalDataSummary(data);
+      return summaryData;
     } else {
       throw new Error('unable to fetch weather data');
     }
@@ -65,3 +66,28 @@ exports.getHistoricalWeatherData = async (latitude, longitude, days) => {
     }
   }
 };
+
+function makeHistoricalDataSummary(data) {
+  let totalTemp = 0;
+  let totalPrecipitation = 0;
+  let totalWindSpeed = 0;
+  let totalHumidity = 0;
+  let count = 0;
+  data.forecast.forecastday.forEach((day) => {
+    totalTemp += day.day.avgtemp_c;
+    totalPrecipitation += day.day.totalprecip_mm;
+    totalWindSpeed += day.day.maxwind_kph;
+    totalHumidity += day.day.avghumidity;
+    count++;
+  });
+  const avgTemp = totalTemp / count;
+  const avgWind = totalWindSpeed / count;
+  const avgHumidity = totalHumidity / count;
+
+  return {
+    averageTemperature: `${avgTemp.toFixed(2)}°C`,
+    totalPrecipitation: `${totalPrecipitation.toFixed(2)}mm`,
+    averageWindSpeed: `${avgWind.toFixed(2)}km/h`,
+    averageHumidity: `${avgHumidity.toFixed(2)}%`,
+  };
+}
