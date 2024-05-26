@@ -32,7 +32,8 @@ exports.getLocation = async (req, res) => {
     const locationId = req.params.location_id;
     if (!locationId)
       return res.status(400).send({ message: 'Required params missing' });
-    const location = await Location.findByPk(locationId);
+    const location = await Location.findByPk(locationId, { raw: true });
+    console.log('location froml', location);
     if (!location)
       return res.status(404).send({ message: 'location not found' });
     return res.status(200).send(location);

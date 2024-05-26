@@ -15,14 +15,14 @@ exports.getWeatherForcast = async (req, res) => {
     const longitude = location?.longitude;
     const latitude = location?.latitude;
     let weatherData;
-    const redisKey = `${longitude}/${latitude}_weatherData`;
+    const redisKey = `${latitude}/${longitude}_weatherData`;
     const cachedWeatherData = await redisService.getValueFromRedis(redisKey);
     if (cachedWeatherData) {
       weatherData = JSON.parse(cachedWeatherData);
     } else {
       weatherData = await weatherApiService.getcurrentWeatherData(
-        longitude,
-        latitude
+        latitude,
+        longitude
       );
       if (weatherData?.message)
         return res.status(400).send({ message: weatherData.message });
