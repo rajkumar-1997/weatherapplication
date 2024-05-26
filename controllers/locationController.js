@@ -2,12 +2,6 @@ const Location = require('../models/locationModel');
 exports.addLocation = async (req, res) => {
   try {
     const { name, latitude, longitude } = req.body;
-    if (!name || !latitude || !longitude)
-      return res.status(400).send({ message: 'Required params missing' });
-
-    if (latitude < -90 || latitude > 90 || longitude < -180 || longitude > 180)
-      return res.status(400).send({ message: 'Invalid latitude or longitude' });
-
     const LocationExists = await Location.findOne({ where: { name } });
     if (LocationExists)
       return res.status(409).send({ message: 'location already exists' });
@@ -50,8 +44,6 @@ exports.updateLocation = async (req, res) => {
   try {
     const locationId = req.params.location_id;
     const { name, latitude, longitude } = req.body;
-    if ((!name && !latitude && !longitude) || !locationId)
-      return res.status(400).send({ message: 'Required params missing' });
     const updatedData = { name, latitude, longitude };
     const [updatedRowCount, updatedLocation] = await Location.update(
       updatedData,
