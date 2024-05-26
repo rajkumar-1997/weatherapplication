@@ -5,6 +5,9 @@ exports.addLocation = async (req, res) => {
     if (!name || !latitude || !longitude)
       return res.status(400).send({ message: 'Required params missing' });
 
+    if (latitude < -90 || latitude > 90 || longitude < -180 || longitude > 180)
+      return res.status(400).send({ message: 'Invalid latitude or longitude' });
+
     const LocationExists = await Location.findOne({ where: { name } });
     if (LocationExists)
       return res.status(409).send({ message: 'location already exists' });

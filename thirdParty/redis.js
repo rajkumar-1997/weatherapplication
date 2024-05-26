@@ -21,7 +21,6 @@ redisClient.on('error', (error) => {
 const getValueFromRedis = async (key) => {
   try {
     const value = await redisClient.get(key);
-    console.log(value);
     if (value) return value;
     return null;
   } catch (error) {
