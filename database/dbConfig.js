@@ -1,14 +1,15 @@
 const Sequelize = require('sequelize');
 const {
-  DBName,
-  DBPassword,
-  DBUserName,
-  DBHost,
+  dbName,
+  dbPassword,
+  dbUserName,
+  dbHost,
 } = require('../config/envConfig');
 
-const sequelize = new Sequelize(DBName, DBUserName, DBPassword, {
-  DBHost,
+const sequelize = new Sequelize(dbName, dbUserName, dbPassword, {
+  dbHost,
   dialect: 'postgres',
+  logging: false,
 });
 
 const connectDB = async () => {

@@ -1,7 +1,12 @@
 const dotenv = require('dotenv');
 dotenv.config();
 exports.PORT = process.env.PORT;
-exports.DBName = process.env.DB_NAME;
-exports.DBPassword = process.env.DB_PASSWORD;
-exports.DBUserName = process.env.DB_USERNAME;
-exports.DBHost = process.env.DB_HOST;
+exports.dbName = process.env.DB_NAME;
+exports.dbPassword = process.env.DB_PASSWORD;
+exports.dbUserName = process.env.DB_USERNAME;
+exports.dbHost = process.env.DB_HOST;
+exports.weatherApiKey = process.env.WEATHER_API_KEY;
+exports.redisHost = process.env.REDIS_HOST;
+exports.redisPort = process.env.REDIS_PORT;
+exports.redisPassword = process.env.REDIS_PASSWORD;
+exports.redisUsername = process.env.REDIS_USERNAME;
